@@ -9,5 +9,5 @@ type BlogPost struct {
 	AuthorID    uint                   `json:"authorID"`
 	Author      *User                  `json:"author,omitempty"`
 	Comments    []*Comment             `json:"comments,omitempty"`
-	Likes       []*User                `json:"likes" gorm:"many2many:like_blog_posts"`
+	Likes       []*User                `json:"likes,omitempty" gorm:"many2many:like_blog_posts"`
 }

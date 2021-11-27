@@ -40,7 +40,7 @@ var ThreadCommentRetrieve = func(w http.ResponseWriter, r *http.Request) {
 	id := params["id"]
 
 	db := db.GetDB()
-	err := db.Preload("Author").First(&ThreadComment, id).Error
+	err := db.Preload("Author").Preload("Likes").First(&ThreadComment, id).Error
 
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -124,7 +124,7 @@ var ThreadCommentQuery = func(w http.ResponseWriter, r *http.Request) {
 	u.CheckOrderAndSortParams(&order, &sort)
 
 	db := db.GetDB()
-	err := db.Preload("Author").Order(fmt.Sprintf("%s %s", sort, order)).
+	err := db.Preload("Author").Preload("Likes").Order(fmt.Sprintf("%s %s", sort, order)).
 		Offset(start).Limit(end - start).Find(&agroModels).Error
 
 	if err != nil {

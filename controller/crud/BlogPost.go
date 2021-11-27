@@ -41,7 +41,7 @@ var BlogPostRetrieve = func(w http.ResponseWriter, r *http.Request) {
 
 	db := db.GetDB()
 	err := db.Preload("Author").Preload("Instruments").Preload("Comments").
-		Preload("Comments.ThreadComments").First(&BlogPost, id).Error
+		Preload("Comments.ThreadComments").Preload("Likes").First(&BlogPost, id).Error
 
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -126,7 +126,7 @@ var BlogPostQuery = func(w http.ResponseWriter, r *http.Request) {
 
 	db := db.GetDB()
 	err := db.Preload("Author").Preload("Instruments").Preload("Comments").
-		Preload("Comments.ThreadComments").Order(fmt.Sprintf("%s %s", sort, order)).
+		Preload("Comments.ThreadComments").Preload("Likes").Order(fmt.Sprintf("%s %s", sort, order)).
 		Offset(start).Limit(end - start).Find(&agroModels).Error
 
 	if err != nil {

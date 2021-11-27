@@ -40,7 +40,7 @@ var CommentRetrieve = func(w http.ResponseWriter, r *http.Request) {
 	id := params["id"]
 
 	db := db.GetDB()
-	err := db.Preload("Author").Preload("ThreadComments").First(&Comment, id).Error
+	err := db.Preload("Author").Preload("Likes").Preload("ThreadComments").First(&Comment, id).Error
 
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -125,7 +125,7 @@ var CommentQuery = func(w http.ResponseWriter, r *http.Request) {
 
 	db := db.GetDB()
 	err := db.Preload("Author").Preload("ThreadComments").
-		Order(fmt.Sprintf("%s %s", sort, order)).
+		Preload("Likes").Order(fmt.Sprintf("%s %s", sort, order)).
 		Offset(start).Limit(end - start).Find(&agroModels).Error
 
 	if err != nil {

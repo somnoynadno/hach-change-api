@@ -10,5 +10,5 @@ type Comment struct {
 	AuthorID       uint             `json:"authorID"`
 	Author         *User            `json:"author,omitempty"`
 	ThreadComments []*ThreadComment `json:"threadComments,omitempty"`
-	Likes          []*User          `json:"likes" gorm:"many2many:like_comments"`
+	Likes          []*User          `json:"likes,omitempty" gorm:"many2many:like_comments"`
 }

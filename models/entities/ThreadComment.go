@@ -9,5 +9,5 @@ type ThreadComment struct {
 	Comment   *Comment `json:"comment,omitempty"`
 	AuthorID  uint     `json:"authorID"`
 	Author    *User    `json:"author,omitempty"`
-	Likes     []*User  `json:"likes" gorm:"many2many:like_thread_comments"`
+	Likes     []*User  `json:"likes,omitempty" gorm:"many2many:like_thread_comments"`
 }
