@@ -1,13 +1,13 @@
 package auxiliary
 
 type LoginCredentials struct {
-	Email       string
-	Password    string
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
 type RegisterCredentials struct {
-	Email       string
-	Password    string
-	Name        string
-	Surname     string
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	Name     string `json:"name"`
+	Surname  string `json:"surname"`
 }

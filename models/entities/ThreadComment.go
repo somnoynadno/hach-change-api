@@ -4,9 +4,9 @@ import "hack-change-api/models/auxiliary"
 
 type ThreadComment struct {
 	auxiliary.BaseModel
-	Text      string
-	CommentID uint
-	Comment   *Comment `json:",omitempty"`
-	AuthorID  uint
-	Author    *User `json:",omitempty"`
+	Text      string   `json:"text"`
+	CommentID uint     `json:"commentID"`
+	Comment   *Comment `json:"comment,omitempty"`
+	AuthorID  uint     `json:"authorID"`
+	Author    *User    `json:"author,omitempty"`
 }
