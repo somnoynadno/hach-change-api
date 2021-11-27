@@ -10,4 +10,5 @@ type RegisterCredentials struct {
 	Password string `json:"password"`
 	Name     string `json:"name"`
 	Surname  string `json:"surname"`
+	Username string `json:"username" gorm:"unique_index;not null;"`
 }
