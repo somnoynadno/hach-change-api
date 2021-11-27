@@ -6,6 +6,8 @@ services:
     ports:
       - 9898:9898
     restart: always
+    env_file:
+      - .env
     depends_on:
       - invest-db
     networks:
