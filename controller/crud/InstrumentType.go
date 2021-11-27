@@ -40,7 +40,7 @@ var InstrumentTypeRetrieve = func(w http.ResponseWriter, r *http.Request) {
 	id := params["id"]
 
 	db := db.GetDB()
-	err := db.Preload("Instruments").First(&InstrumentType, id).Error
+	err := db.Preload("Instruments").Preload("Instruments.BlogPosts").First(&InstrumentType, id).Error
 
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -124,7 +124,8 @@ var InstrumentTypeQuery = func(w http.ResponseWriter, r *http.Request) {
 	u.CheckOrderAndSortParams(&order, &sort)
 
 	db := db.GetDB()
-	err := db.Preload("Instruments").Order(fmt.Sprintf("%s %s", sort, order)).
+	err := db.Preload("Instruments").Preload("Instruments.BlogPosts").
+		Order(fmt.Sprintf("%s %s", sort, order)).
 		Offset(start).Limit(end - start).Find(&agroModels).Error
 
 	if err != nil {
