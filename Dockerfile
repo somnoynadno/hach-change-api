@@ -1,9 +1,11 @@
 FROM golang:latest
 ENV ENV PRODUCTION
 
+RUN mkdir /app
+ADD . /app/
 WORKDIR /app
-ADD . .
 
 RUN go build -o main .
 CMD ["/app/main"]
+
 EXPOSE 9898
