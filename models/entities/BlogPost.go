@@ -8,5 +8,5 @@ type BlogPost struct {
 	Instruments []*FinancialInstrument `json:"instruments" gorm:"many2many:post_instruments;"`
 	AuthorID    uint                   `json:"authorID"`
 	Author      *User                  `json:"author,omitempty"`
-	Comments    []*Comment             `json:"comments"`
+	Comments    []*Comment             `json:"comments,omitempty"`
 }

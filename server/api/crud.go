@@ -13,6 +13,12 @@ func InitCRUD(router *mux.Router) {
 	router.HandleFunc("/blog_post/{id}", crud.BlogPostUpdate).Methods(http.MethodPut, http.MethodOptions)
 	router.HandleFunc("/blog_post/{id}", crud.BlogPostDelete).Methods(http.MethodDelete, http.MethodOptions)
 
+	router.HandleFunc("/chat_message", crud.ChatMessageQuery).Methods(http.MethodGet, http.MethodOptions)
+	router.HandleFunc("/chat_message", crud.ChatMessageCreate).Methods(http.MethodPost, http.MethodOptions)
+	router.HandleFunc("/chat_message/{id}", crud.ChatMessageRetrieve).Methods(http.MethodGet, http.MethodOptions)
+	router.HandleFunc("/chat_message/{id}", crud.ChatMessageUpdate).Methods(http.MethodPut, http.MethodOptions)
+	router.HandleFunc("/chat_message/{id}", crud.ChatMessageDelete).Methods(http.MethodDelete, http.MethodOptions)
+
 	router.HandleFunc("/comment", crud.CommentQuery).Methods(http.MethodGet, http.MethodOptions)
 	router.HandleFunc("/comment", crud.CommentCreate).Methods(http.MethodPost, http.MethodOptions)
 	router.HandleFunc("/comment/{id}", crud.CommentRetrieve).Methods(http.MethodGet, http.MethodOptions)

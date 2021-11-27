@@ -13,9 +13,9 @@ import (
 	"strconv"
 )
 
-var UserCreate = func(w http.ResponseWriter, r *http.Request) {
-	User := &entities.User{}
-	err := json.NewDecoder(r.Body).Decode(User)
+var ChatMessageCreate = func(w http.ResponseWriter, r *http.Request) {
+	ChatMessage := &entities.ChatMessage{}
+	err := json.NewDecoder(r.Body).Decode(ChatMessage)
 
 	if err != nil {
 		u.HandleBadRequest(w, err)
@@ -23,25 +23,24 @@ var UserCreate = func(w http.ResponseWriter, r *http.Request) {
 	}
 
 	db := db.GetDB()
-	err = db.Create(User).Error
+	err = db.Create(ChatMessage).Error
 
 	if err != nil {
 		u.HandleInternalError(w, err)
 	} else {
-		res, _ := json.Marshal(User)
+		res, _ := json.Marshal(ChatMessage)
 		u.RespondJSON(w, res)
 	}
 }
 
-var UserRetrieve = func(w http.ResponseWriter, r *http.Request) {
-	User := &entities.User{}
+var ChatMessageRetrieve = func(w http.ResponseWriter, r *http.Request) {
+	ChatMessage := &entities.ChatMessage{}
 
 	params := mux.Vars(r)
 	id := params["id"]
 
 	db := db.GetDB()
-	err := db.Preload("BlogPosts").Preload("Comments").
-		First(&User, id).Error
+	err := db.Preload("From").Preload("To").First(&ChatMessage, id).Error
 
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -52,7 +51,7 @@ var UserRetrieve = func(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, err := json.Marshal(User)
+	res, err := json.Marshal(ChatMessage)
 	if err != nil {
 		u.HandleInternalError(w, err)
 	} else {
@@ -60,14 +59,14 @@ var UserRetrieve = func(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-var UserUpdate = func(w http.ResponseWriter, r *http.Request) {
-	User := &entities.User{}
+var ChatMessageUpdate = func(w http.ResponseWriter, r *http.Request) {
+	ChatMessage := &entities.ChatMessage{}
 
 	params := mux.Vars(r)
 	id := params["id"]
 
 	db := db.GetDB()
-	err := db.First(&User, id).Error
+	err := db.First(&ChatMessage, id).Error
 
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -78,16 +77,16 @@ var UserUpdate = func(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	newUser := &entities.User{}
-	err = json.NewDecoder(r.Body).Decode(newUser)
+	newChatMessage := &entities.ChatMessage{}
+	err = json.NewDecoder(r.Body).Decode(newChatMessage)
 
 	if err != nil {
 		u.HandleBadRequest(w, err)
 		return
 	}
 
-	db.Model(&User).Update("is_verified", newUser.IsVerified)
-	err = db.Model(&User).Updates(newUser).Error
+	db.Model(&ChatMessage).Update("seen", newChatMessage.Seen)
+	err = db.Model(&ChatMessage).Updates(newChatMessage).Error
 
 	if err != nil {
 		u.HandleInternalError(w, err)
@@ -96,12 +95,12 @@ var UserUpdate = func(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-var UserDelete = func(w http.ResponseWriter, r *http.Request) {
+var ChatMessageDelete = func(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id := params["id"]
 
 	db := db.GetDB()
-	err := db.Delete(&entities.User{}, id).Error
+	err := db.Delete(&entities.ChatMessage{}, id).Error
 
 	if err != nil {
 		u.HandleInternalError(w, err)
@@ -110,8 +109,8 @@ var UserDelete = func(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-var UserQuery = func(w http.ResponseWriter, r *http.Request) {
-	var agroModels []entities.User
+var ChatMessageQuery = func(w http.ResponseWriter, r *http.Request) {
+	var agroModels []entities.ChatMessage
 	var count string
 
 	order := r.FormValue("_order")
@@ -126,7 +125,7 @@ var UserQuery = func(w http.ResponseWriter, r *http.Request) {
 	u.CheckOrderAndSortParams(&order, &sort)
 
 	db := db.GetDB()
-	err := db.Debug().Preload("BlogPosts").Preload("Comments").
+	err := db.Preload("From").Preload("To").
 		Order(fmt.Sprintf("%s %s", sort, order)).
 		Offset(start).Limit(end - start).Find(&agroModels).Error
 
@@ -140,7 +139,7 @@ var UserQuery = func(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		u.HandleInternalError(w, err)
 	} else {
-		db.Model(&entities.User{}).Count(&count)
+		db.Model(&entities.ChatMessage{}).Count(&count)
 		u.SetTotalCountHeader(w, count)
 		u.RespondJSON(w, res)
 	}
