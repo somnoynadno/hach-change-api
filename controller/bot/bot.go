@@ -58,5 +58,5 @@ var TalkToBalaboba = func(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Info(boba.Text)
-	u.RespondJSON(w, []byte(boba.Query + boba.Text))
+	u.Respond(w, map[string]interface{}{"text": boba.Query + boba.Text})
 }
