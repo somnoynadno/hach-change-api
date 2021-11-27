@@ -79,14 +79,21 @@ var Register = func(w http.ResponseWriter, r *http.Request) {
 		Password:   passwordHash,
 		Name:       account.Name,
 		Surname:    account.Surname,
+		Username:   account.Username,
 		IsVerified: false,
 	}
 
 	err = db.GetDB().Create(&user).Error
 	if err != nil {
 		u.HandleBadRequest(w, err)
-	} else {
-		res, _ := json.Marshal(user)
-		u.RespondJSON(w, res)
+		return
 	}
+
+	resp := login(account.Email, account.Password)
+	if resp["token"] == nil {
+		u.HandleBadRequest(w, errors.New("wrong credentials"))
+		return
+	}
+
+	u.Respond(w, resp)
 }
