@@ -5,6 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	log "github.com/sirupsen/logrus"
+	"hack-change-api/models/entities"
 	"os"
 )
 
@@ -42,7 +43,13 @@ func GetDB() *gorm.DB {
 func migrateSchema() error {
 	// Notice: many-to-many first
 	err := db.AutoMigrate(
-
+		entities.BlogPost{},
+		entities.ChatMessage{},
+		entities.Comment{},
+		entities.FinancialInstrument{},
+		entities.InstrumentType{},
+		entities.ThreadComment{},
+		entities.User{},
 	).Error
 	return err
 }
