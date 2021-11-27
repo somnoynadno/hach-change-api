@@ -43,13 +43,16 @@ func GetDB() *gorm.DB {
 func migrateSchema() error {
 	// Notice: many-to-many first
 	err := db.AutoMigrate(
+		entities.LikeBlogPost{},
+		entities.LikeComment{},
+		entities.LikeThreadComment{},
 		entities.Subscription{},
+		entities.ThreadComment{},
 		entities.BlogPost{},
 		entities.ChatMessage{},
 		entities.Comment{},
 		entities.FinancialInstrument{},
 		entities.InstrumentType{},
-		entities.ThreadComment{},
 		entities.User{},
 	).Error
 	return err

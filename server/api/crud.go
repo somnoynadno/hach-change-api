@@ -37,6 +37,24 @@ func InitCRUD(router *mux.Router) {
 	router.HandleFunc("/instrument_type/{id}", crud.InstrumentTypeUpdate).Methods(http.MethodPut, http.MethodOptions)
 	router.HandleFunc("/instrument_type/{id}", crud.InstrumentTypeDelete).Methods(http.MethodDelete, http.MethodOptions)
 
+	router.HandleFunc("/like_blog_post", crud.LikeBlogPostQuery).Methods(http.MethodGet, http.MethodOptions)
+	router.HandleFunc("/like_blog_post", crud.LikeBlogPostCreate).Methods(http.MethodPost, http.MethodOptions)
+	router.HandleFunc("/like_blog_post/{id}", crud.LikeBlogPostRetrieve).Methods(http.MethodGet, http.MethodOptions)
+	router.HandleFunc("/like_blog_post/{id}", crud.LikeBlogPostUpdate).Methods(http.MethodPut, http.MethodOptions)
+	router.HandleFunc("/like_blog_post/{id}", crud.LikeBlogPostDelete).Methods(http.MethodDelete, http.MethodOptions)
+
+	router.HandleFunc("/like_comment", crud.LikeCommentQuery).Methods(http.MethodGet, http.MethodOptions)
+	router.HandleFunc("/like_comment", crud.LikeCommentCreate).Methods(http.MethodPost, http.MethodOptions)
+	router.HandleFunc("/like_comment/{id}", crud.LikeCommentRetrieve).Methods(http.MethodGet, http.MethodOptions)
+	router.HandleFunc("/like_comment/{id}", crud.LikeCommentUpdate).Methods(http.MethodPut, http.MethodOptions)
+	router.HandleFunc("/like_comment/{id}", crud.LikeCommentDelete).Methods(http.MethodDelete, http.MethodOptions)
+
+	router.HandleFunc("/like_thread_comment", crud.LikeThreadCommentQuery).Methods(http.MethodGet, http.MethodOptions)
+	router.HandleFunc("/like_thread_comment", crud.LikeThreadCommentCreate).Methods(http.MethodPost, http.MethodOptions)
+	router.HandleFunc("/like_thread_comment/{id}", crud.LikeThreadCommentRetrieve).Methods(http.MethodGet, http.MethodOptions)
+	router.HandleFunc("/like_thread_comment/{id}", crud.LikeThreadCommentUpdate).Methods(http.MethodPut, http.MethodOptions)
+	router.HandleFunc("/like_thread_comment/{id}", crud.LikeThreadCommentDelete).Methods(http.MethodDelete, http.MethodOptions)
+
 	router.HandleFunc("/subscription", crud.SubscriptionQuery).Methods(http.MethodGet, http.MethodOptions)
 	router.HandleFunc("/subscription", crud.SubscriptionCreate).Methods(http.MethodPost, http.MethodOptions)
 	router.HandleFunc("/subscription/{id}", crud.SubscriptionRetrieve).Methods(http.MethodGet, http.MethodOptions)
