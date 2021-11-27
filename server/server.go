@@ -5,6 +5,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	log "github.com/sirupsen/logrus"
 	u "hack-change-api/muxutil"
+	"hack-change-api/server/api"
 	"hack-change-api/server/middleware"
 	"net/http"
 	"os"
@@ -16,6 +17,8 @@ func initRouter() *mux.Router {
 	router := r.PathPrefix("/api").Subrouter()
 	v1 := router.PathPrefix("/v1").Subrouter()
 	//auth := router.PathPrefix("/auth").Subrouter()
+
+	api.InitCRUD(v1)
 
 	// middleware usage
 	// do NOT modify the order

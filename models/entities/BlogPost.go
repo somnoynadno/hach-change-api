@@ -8,4 +8,5 @@ type BlogPost struct {
 	Instruments []*FinancialInstrument `gorm:"many2many:post_instruments;"`
 	AuthorID    uint
 	Author      User
+	Comments    []*Comment
 }

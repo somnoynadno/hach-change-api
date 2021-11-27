@@ -4,9 +4,10 @@ import "hack-change-api/models/auxiliary"
 
 type Comment struct {
 	auxiliary.BaseModel
-	Text       string
-	BlogPostID uint
-	BlogPost   BlogPost
-	AuthorID   uint
-	Author     User
+	Text           string
+	BlogPostID     uint
+	BlogPost       BlogPost
+	AuthorID       uint
+	Author         User
+	ThreadComments []*ThreadComment
 }

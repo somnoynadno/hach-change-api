@@ -9,5 +9,5 @@ type FinancialInstrument struct {
 	Description      string
 	InstrumentTypeID uint
 	InstrumentType   InstrumentType
-	Posts            []*FinancialInstrument `gorm:"many2many:post_instruments;"`
+	BlogPosts        []*BlogPost `gorm:"many2many:post_instruments;"`
 }
