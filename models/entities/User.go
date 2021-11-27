@@ -17,6 +17,6 @@ type User struct {
 	LastVisit   *time.Time  `json:"lastVisit"`
 	BlogPosts   []*BlogPost `json:"blogPosts,omitempty" gorm:"foreignKey:AuthorID"`
 	Comments    []*Comment  `json:"comments,omitempty" gorm:"foreignKey:AuthorID"`
-	Publishers  []*User     `json:"publishers,omitempty" gorm:"many2many:subscriptions;ForeignKey:id;References:publisher_id;"`
-	Subscribers []*User     `json:"subscribers,omitempty" gorm:"many2many:subscriptions;ForeignKey:id;References:subscriber_id;"`
+	//Publishers  []*User     `json:"publishers,omitempty" gorm:"many2many:subscriptions;ForeignKey:id;References:publisher_id;"`
+	//Subscribers []*User     `json:"subscribers,omitempty" gorm:"many2many:subscriptions;ForeignKey:id;References:subscriber_id;"`
 }
