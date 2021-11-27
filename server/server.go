@@ -16,9 +16,10 @@ func initRouter() *mux.Router {
 
 	router := r.PathPrefix("/api").Subrouter()
 	v1 := router.PathPrefix("/v1").Subrouter()
-	//auth := router.PathPrefix("/auth").Subrouter()
+	auth := router.PathPrefix("/auth").Subrouter()
 
 	api.InitCRUD(v1)
+	api.InitAuth(auth)
 
 	// middleware usage
 	// do NOT modify the order
