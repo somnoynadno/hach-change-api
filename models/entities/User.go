@@ -16,5 +16,5 @@ type User struct {
 	LastVisit  *time.Time
 	BlogPosts  []*BlogPost
 	Comments   []*Comment
-	Followers  []*User `gorm:"many2many:followers"`
+	Followers  []*User `gorm:"many2many:user_followers"`
 }
