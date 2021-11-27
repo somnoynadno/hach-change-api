@@ -20,5 +20,4 @@ jobs:
             cd /home/somnoynadno/services/hack-change-api
             git fetch --all
             git reset --hard origin/master
-            cd ..
             docker-compose up --build -d --no-deps invest-api
