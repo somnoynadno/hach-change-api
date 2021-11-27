@@ -6,6 +6,8 @@ services:
     ports:
       - 9898:9898
     restart: always
+    depends_on:
+      - invest-db
     networks:
       - default
       - db_network
@@ -17,6 +19,7 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
     restart: always
+    hostname: invest-db
     volumes:
       - pgdata:/var/lib/postgresql/data
     expose:
@@ -30,7 +33,7 @@ services:
     ports:
       - 21212:8080
     depends_on:
-      - junway_postgres
+      - invest-db
     networks:
       - default
       - db_network
