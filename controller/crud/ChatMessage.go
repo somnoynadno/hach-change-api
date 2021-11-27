@@ -124,10 +124,36 @@ var ChatMessageQuery = func(w http.ResponseWriter, r *http.Request) {
 	}
 	u.CheckOrderAndSortParams(&order, &sort)
 
+	from, err3 := strconv.Atoi(r.FormValue("from"))
+	to, err4 := strconv.Atoi(r.FormValue("to"))
+
 	db := db.GetDB()
-	err := db.Preload("From").Preload("To").
-		Order(fmt.Sprintf("%s %s", sort, order)).
-		Offset(start).Limit(end - start).Find(&agroModels).Error
+	var err error
+
+	if err3 == nil && err4 == nil {
+		// query certain chat message history
+		err = db.Preload("From").Preload("To").
+			Where("from_id = ? and to_id = ?", from, to).
+			Order(fmt.Sprintf("%s %s", sort, order)).
+			Offset(start).Limit(end - start).Find(&agroModels).Error
+	} else if err3 == nil {
+		// query last messages for all chats from one user
+		err = db.Preload("From").Preload("To").
+			Where("from_id = ?", from).Group("to_id").
+			Order(fmt.Sprintf("%s %s", sort, order)).
+			Offset(start).Limit(end - start).Find(&agroModels).Error
+	} else if err4 == nil {
+		// query last messages for all chats from one user
+		err = db.Preload("From").Preload("To").
+			Where("to_id = ?", to).Group("from_id").
+			Order(fmt.Sprintf("%s %s", sort, order)).
+			Offset(start).Limit(end - start).Find(&agroModels).Error
+	} else {
+		// query all messages in db (debug purpose)
+		err = db.Preload("From").Preload("To").
+			Order(fmt.Sprintf("%s %s", sort, order)).
+			Offset(start).Limit(end - start).Find(&agroModels).Error
+	}
 
 	if err != nil {
 		u.HandleInternalError(w, err)
