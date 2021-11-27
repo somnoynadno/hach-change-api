@@ -95,5 +95,16 @@ var Register = func(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	subs := entities.Subscription{
+		PublisherID: 1, // Открытие Инвестиции
+		SubscriberID: user.ID,
+	}
+
+	err = db.GetDB().Create(&subs).Error
+	if err != nil {
+		u.HandleInternalError(w, err)
+		return
+	}
+
 	u.Respond(w, resp)
 }
