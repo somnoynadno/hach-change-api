@@ -139,18 +139,18 @@ var ChatMessageQuery = func(w http.ResponseWriter, r *http.Request) {
 	} else if err3 == nil {
 		// query last messages for all chats from one user
 		var toIDs []uint
-		db.Debug().Table("chat_messages").Select("to_id, max(id) as id").
+		db.Table("chat_messages").Where("to_id = ", to).Select("to_id, max(id) as id").
 			Group("to_id").Pluck("max(id) as id", &toIDs)
-		err = db.Debug().Preload("From").Preload("To").
+		err = db.Preload("From").Preload("To").
 			Where("from_id = ?", from).Where("id IN (?)", toIDs).
 			Order(fmt.Sprintf("%s %s", sort, order)).
 			Offset(start).Limit(end - start).Find(&agroModels).Error
 	} else if err4 == nil {
 		// query last messages for all chats from one user
 		var fromIDs []uint
-		db.Debug().Table("chat_messages").Select("from_id, max(id) as id").
+		db.Table("chat_messages").Where("from_id = ", from).Select("from_id, max(id) as id").
 			Group("from_id").Pluck("max(id) as id", &fromIDs)
-		err = db.Debug().Preload("From").Preload("To").
+		err = db.Preload("From").Preload("To").
 			Where("to_id = ?", to).Where("id IN (?)", fromIDs).
 			Order(fmt.Sprintf("%s %s", sort, order)).
 			Offset(start).Limit(end - start).Find(&agroModels).Error
