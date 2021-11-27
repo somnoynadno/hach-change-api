@@ -41,7 +41,7 @@ var UserRetrieve = func(w http.ResponseWriter, r *http.Request) {
 
 	db := db.GetDB()
 	err := db.Preload("BlogPosts").Preload("Comments").
-		Preload("Followers").Preload("Subscriptions").
+		Preload("Publishers").Preload("Subscribers").
 		First(&User, id).Error
 
 	if err != nil {
@@ -127,7 +127,7 @@ var UserQuery = func(w http.ResponseWriter, r *http.Request) {
 
 	db := db.GetDB()
 	err := db.Preload("BlogPosts").Preload("Comments").
-		Preload("Followers").Preload("Subscriptions").
+		Preload("Publishers").Preload("Subscribers").
 		Order(fmt.Sprintf("%s %s", sort, order)).
 		Offset(start).Limit(end - start).Find(&agroModels).Error
 
