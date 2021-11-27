@@ -139,13 +139,13 @@ var ChatMessageQuery = func(w http.ResponseWriter, r *http.Request) {
 	} else if err3 == nil {
 		// query last messages for all chats from one user
 		err = db.Preload("From").Preload("To").
-			Where("from_id = ?", from).Group("to_id").
+			Where("from_id = ?", from).Group("to_id, id").
 			Order(fmt.Sprintf("%s %s", sort, order)).
 			Offset(start).Limit(end - start).Find(&agroModels).Error
 	} else if err4 == nil {
 		// query last messages for all chats from one user
 		err = db.Preload("From").Preload("To").
-			Where("to_id = ?", to).Group("from_id").
+			Where("to_id = ?", to).Group("from_id, id").
 			Order(fmt.Sprintf("%s %s", sort, order)).
 			Offset(start).Limit(end - start).Find(&agroModels).Error
 	} else {
