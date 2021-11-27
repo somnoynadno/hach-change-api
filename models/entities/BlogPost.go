@@ -7,6 +7,6 @@ type BlogPost struct {
 	Text        string
 	Instruments []*FinancialInstrument `gorm:"many2many:post_instruments;"`
 	AuthorID    uint
-	Author      User
+	Author      *User `json:",omitempty"`
 	Comments    []*Comment
 }

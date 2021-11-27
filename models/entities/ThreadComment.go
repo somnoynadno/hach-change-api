@@ -6,7 +6,7 @@ type ThreadComment struct {
 	auxiliary.BaseModel
 	Text      string
 	CommentID uint
-	Comment   Comment
+	Comment   *Comment `json:",omitempty"`
 	AuthorID  uint
-	Author    User
+	Author    *User `json:",omitempty"`
 }

@@ -8,6 +8,6 @@ type FinancialInstrument struct {
 	Name             string
 	Description      string
 	InstrumentTypeID uint
-	InstrumentType   InstrumentType
-	BlogPosts        []*BlogPost `gorm:"many2many:post_instruments;"`
+	InstrumentType   *InstrumentType `json:",omitempty"`
+	BlogPosts        []*BlogPost `gorm:"many2many:post_instruments;" json:",omitempty"`
 }

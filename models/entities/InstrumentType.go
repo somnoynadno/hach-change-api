@@ -5,5 +5,5 @@ import "hack-change-api/models/auxiliary"
 type InstrumentType struct {
 	auxiliary.BaseModelCompact
 	Name        string
-	Instruments []*FinancialInstrument
+	Instruments []*FinancialInstrument `json:",omitempty"`
 }

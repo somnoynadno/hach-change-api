@@ -7,7 +7,7 @@ type ChatMessage struct {
 	Text   string
 	Seen   bool `gorm:"not null;default:false;"`
 	FromID uint
-	From   User
+	From   *User `json:",omitempty"`
 	ToID   uint
-	To     User
+	To     *User `json:",omitempty"`
 }
