@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  invest-api:
+    build: .
+    ports:
+      - 9898:9898
+    restart: always
+    networks:
+      - default
+      - db_network
+
+  invest-db:
+    image: postgres:13.1-alpine
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    expose:
+      - 5432
+    networks:
+      - db_network
+
+  invest-adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 21212:8080
+    depends_on:
+      - junway_postgres
+    networks:
+      - default
+      - db_network
+
+networks:
+  default:
+  db_network:
+    internal: true
+
+volumes:
+  pgdata:
