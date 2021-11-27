@@ -25,7 +25,7 @@ func initRouter() *mux.Router {
 	router.Use(middleware.CORS)    // enable CORS headers
 	router.Use(middleware.LogPath) // log IP, path and method
 	router.Use(middleware.LogBody) // log HTTP body
-	v1.Use(middleware.JwtAuth)     // attach JWT auth middleware
+	//v1.Use(middleware.JwtAuth)     // attach JWT auth middleware
 
 	// handle ping
 	router.HandleFunc("/ping", u.HandlePing).Methods(http.MethodGet, http.MethodPost)
