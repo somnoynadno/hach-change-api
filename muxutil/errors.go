@@ -1,5 +1,11 @@
 package muxutil
 
+import (
+	log "github.com/sirupsen/logrus"
+	"hack-change-api/metrics"
+	"net/http"
+)
+
 // HandleBadRequest must be raised on 400 errors.
 func HandleBadRequest(w http.ResponseWriter, err error) {
 	log.Error(err)
