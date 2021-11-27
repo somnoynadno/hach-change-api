@@ -1,12 +1,12 @@
 package entities
 
 import (
-	"hack-change-api/models/auxiliary"
+	"github.com/jinzhu/gorm"
 	"time"
 )
 
 type User struct {
-	auxiliary.BaseModel
+	gorm.Model
 	Email      string `gorm:"unique_index;not null;"`
 	Password   string `json:"-" gorm:"not null;"`
 	Name       string
