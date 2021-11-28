@@ -11,6 +11,7 @@ import (
 	u "hack-change-api/muxutil"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 var BlogPostCreate = func(w http.ResponseWriter, r *http.Request) {
@@ -29,6 +30,16 @@ var BlogPostCreate = func(w http.ResponseWriter, r *http.Request) {
 	err = db.Create(BlogPost).Error
 	for _, i := range instruments {
 		db.Exec("insert into post_instruments (blog_post_id, financial_instrument_id) values (?, ?)", BlogPost.ID, i.ID)
+	}
+
+	var allInstrument []entities.FinancialInstrument
+	db.Find(&allInstrument)
+
+	lt := strings.ToLower(BlogPost.Text)
+	for _, i := range allInstrument {
+		if strings.Contains(lt, strings.ToLower(i.Name)) {
+			db.Exec("insert into post_instruments (blog_post_id, financial_instrument_id) values (?, ?)", BlogPost.ID, i.ID)
+		}
 	}
 
 	if err != nil {
