@@ -15,6 +15,20 @@
 
 Чтобы поднять сервисы в контейнере: ` $ docker-compose up --build -d`
 
+### Переменные окружения
+
+Секреты прокидываются в контейнер через `.env` файл.
+
+По умолчанию в нем можно использовать следующие значения:
+```
+db_name=postgres
+db_user=postgres
+db_pass=postgres
+db_host=invest-db
+db_port=5432
+token_password=change-me-123
+```
+
 ## Документация API
 
 Доступна в формате Postman: https://www.getpostman.com/collections/924501d84f116cafa378
