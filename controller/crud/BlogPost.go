@@ -23,7 +23,13 @@ var BlogPostCreate = func(w http.ResponseWriter, r *http.Request) {
 	}
 
 	db := db.GetDB()
+	instruments := BlogPost.Instruments
+	BlogPost.Instruments = nil
+
 	err = db.Create(BlogPost).Error
+	for _, i := range instruments {
+		db.Exec("insert into post_instruments (blog_post_id, financial_instrument_id) values (?, ?)", BlogPost.ID, i.ID)
+	}
 
 	if err != nil {
 		u.HandleInternalError(w, err)
